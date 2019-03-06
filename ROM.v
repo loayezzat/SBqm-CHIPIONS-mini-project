@@ -6,12 +6,12 @@ output reg [n+1:0]wtime;
 /*max value of wtime from eqn in case of 3-bits counter is 21 (can be hold in 5bit reg of max value 31)
 and the size of the rom is also 5-bits
 */
-input wire [n-1:0] pcount ;
-input wire [1:0] tcount ;
-input wire clk ;
-wire [n+1:0] address ;
+input wire [n-1:0] pcount ; // n-bits vector
+input wire [1:0] tcount ; // two bits vector
+input wire clk ; 
+wire [n+1:0] address ;  //(n+2) bits vector, n for pcount and 2 for tcount  
 assign address[n+1:0] = { tcount[1:0] ,pcount[n-1:0] } ; //concatenating tcount(MSBs) and pcount(LSBs) to serve as address to the ROM
-reg [n+1:0]rom [0:31] ; //rom is of 5-bits width with diffferent 32 places ,so we can store 32 values for wtime each of max value 31.
+reg [n+1:0]rom [0:(2**(n+2))-1] ; // the max value of WTIME is found to be hold in (n+2) bits register no. of adresses is{ 2^(n+2) -1} 
 
 //wtime==> waiting time 
 
